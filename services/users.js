@@ -4,6 +4,7 @@ import userModel from '../models/userModel.js'
 
 
 export const loginUser = async(req,res) => {
+    
     const userData = req.body
 
     const currentUser = await userModel.findOne({username: userData.username })
@@ -11,6 +12,7 @@ export const loginUser = async(req,res) => {
 
     try {
         const authenticated = await bcrypt.compare(req.body.password, currentUser.hash)
+        console.log(authenticated)
             if (authenticated) {
                 console.log(`User with the id ${currentUser._id} successfully authenticated`)
                 res.send({id: currentUser._id, username: currentUser.username, email:currentUser.email, score: currentUser.score})

@@ -16,7 +16,7 @@ export const createUser = async(req, res) => {
         const data = req.body
         
         const hashedPw = await bcrypt.hash(data.password, 10)
-        const new_user = await UserModel.create(data)
+        const new_user = await UserModel.create({...data, hash: hashedPw})
         res.send({id: new_user._id, username: new_user.username, email:new_user.email, score: new_user.score})
     } catch (error) {
         console.log(error)
