@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import UserRouter from './routes/usersRouter.js'
+import todosRouter from './routes/todosRouter.js'
 import mongoose from 'mongoose'
 // initialize app
 const app = express()
@@ -18,5 +19,6 @@ app.use(cors())
 app.use(express.json())
 
 app.use('/users', UserRouter)
+app.use('/todos', todosRouter)
 app.get('/', (req,res) => res.send("<h1>Server running on 127.0.0.1:5000</h1>"))
 

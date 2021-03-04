@@ -33,7 +33,6 @@ export const updateUser = async(req, res) => {
 
 export const deleteUser = async(req, res) => {
     const id = req.params.id
-    console.log(id)
     await UserModel.findByIdAndDelete(id)
     const rem_users = await UserModel.find()
     res.send(rem_users)
