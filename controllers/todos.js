@@ -1,9 +1,11 @@
-import todoModel from './../models/todoModel.js'
+import TodoModel from './../models/todoModel.js'
+import UserModel from './../models/userModel.js'
+
 
 
 export const getTodos = async (req,res) => {
     try {
-        const allTodos = await todoModel.find()
+        const allTodos = await TodoModel.find()
         res.send(allTodos)
     } catch (error) {
         console.log('try failed', error)
@@ -12,8 +14,19 @@ export const getTodos = async (req,res) => {
 
 export const createTodo = async (req,res) => {
     try {
-        const data = req.body
-        const newTodo = await todoModel.create(data)
+        const {assignedOn, description, expiresOn, pointsAwarded, timeSpent, title, username } = req.body
+        const assignedUser = await UserModel.findOne({username: username})
+        console.log(assignedUser)
+        const newTodo = new TodoModel({
+            title: title,
+            description: description,
+            assignedOn: assignedOn,
+            expiresOn: expiresOn,
+            pointsAwarded: pointsAwarded,
+            timeSpent: timeSpent,
+            user: assignedUser._id
+        })
+        newTodo.save()
         res.send(newTodo)
     } catch (error) {
         console.log('try failed', error)
@@ -31,8 +44,9 @@ export const updateTodo = async (req,res) => {
 export const deleteTodo = async (req,res) => {
     try {
         const id = req.params.id
-        deletedTodo = await todoModel.findByIdAndDelete(id)
-        remainingTodos = todoModel.find()
+          await TodoModel.findByIdAndDelete(id)
+        const remainingTodos = await TodoModel.find()
+
         res.send(remainingTodos)
     } catch (error) {
         console.log('try failed', error)

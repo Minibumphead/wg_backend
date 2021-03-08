@@ -24,9 +24,9 @@ const todoSchema = mongoose.Schema({
     timeSpent: {
         type: Number
     },
-    user: [{type: mongoose.Schema.Types.ObjectId, ref: "UserModel"}]
+    user: {type: mongoose.Schema.Types.ObjectId, ref: "User"}
 })
 
-const todoModel = mongoose.model("TodoModel", todoSchema)
+const TodoModel = mongoose.model("Todo", todoSchema, "tooodooos")
 
-export default todoModel
+export default TodoModel

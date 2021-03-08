@@ -1,11 +1,27 @@
-import mongoose from 'mongoose'
+
 import UserModel from '../models/userModel.js'
+import TodoModel from '../models/todoModel.js'
 import bcrypt from 'bcrypt'
 
+const cleanUser = (user) => {
+    const cleanedUser = {
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+        score: user.score,
+        todos: user.todos
+    }
+    return cleanedUser
+
+}
 export const getUsers = async(req, res) => {
     try{
-        const all_users = await UserModel.find()
-        res.send(all_users)
+        const allUsers = await UserModel.find()
+        const cleanedUsers = []
+        allUsers.forEach(user => cleanedUsers.push(
+           cleanUser(user)
+        ))
+        res.send(cleanedUsers)
     } catch(error){
         console.log(error)
     }
@@ -13,27 +29,32 @@ export const getUsers = async(req, res) => {
 
 export const createUser = async(req, res) => {
     try {
-        const data = req.body
+        const {username, email, password} = req.body
         
-        const hashedPw = await bcrypt.hash(data.password, 10)
-        const new_user = await UserModel.create({...data, hash: hashedPw})
-        res.send({id: new_user._id, username: new_user.username, email:new_user.email, score: new_user.score})
+        const hashedPw = await bcrypt.hash(password, 10)
+        const newUser = new UserModel({
+            username: username,
+            email: email,
+            hash: hashedPw
+        })
+        await newUser.save()
+        
+        res.send(cleanUser(newUser))
     } catch (error) {
         console.log(error)
     }
 }
 
 export const updateUser = async(req, res) => {
-    const id = req.params.id
-    const data = req.body
-    console.log(id)
-    const updated_user = await UserModel.findByIdAndUpdate(id, data)
-    res.send(updated_user)
+
 }
 
 export const deleteUser = async(req, res) => {
     const id = req.params.id
     await UserModel.findByIdAndDelete(id)
+
+    const todos = await TodoModel.find({user: id})
+    await TodoModel.deleteMany({_id: {$in: todos}} )
     const rem_users = await UserModel.find()
     res.send(rem_users)
 }

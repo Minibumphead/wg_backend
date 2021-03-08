@@ -7,11 +7,10 @@ const UserSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    todos: [{type: mongoose.Schema.Types.ObjectId, ref: "TodoModel"}],
     hash: String
 
 })
 
-const userModel = mongoose.model("UserModel", UserSchema, "users")
+const UserModel = mongoose.model("User", UserSchema, "Users")
 
-export default userModel
+export default UserModel
