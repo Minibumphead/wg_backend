@@ -20,6 +20,7 @@ export const createTodo = async (req,res) => {
         const newTodo = new TodoModel({
             title: title,
             description: description,
+            // completed: false,
             assignedOn: assignedOn,
             expiresOn: expiresOn,
             pointsAwarded: pointsAwarded,

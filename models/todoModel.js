@@ -7,6 +7,10 @@ const todoSchema = mongoose.Schema({
         default: "Kueche"
     },
     description: String,
+    completed: {
+        type: Boolean,
+        default: false
+    },
     assignedOn: {
         type: Date,
         default: new Date
@@ -22,7 +26,8 @@ const todoSchema = mongoose.Schema({
         default: 20
     },
     timeSpent: {
-        type: Number
+        type: Number,
+        default: 0
     },
     user: {type: mongoose.Schema.Types.ObjectId, ref: "User"}
 })
