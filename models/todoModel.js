@@ -32,6 +32,8 @@ const todoSchema = mongoose.Schema({
     user: {type: mongoose.Schema.Types.ObjectId, ref: "User"}
 })
 
+// first argument is how you will reference the model in other schemas. Second argument is the schema. Third argument is how your database will display the table.
+
 const TodoModel = mongoose.model("Todo", todoSchema, "tooodooos")
 
 export default TodoModel
