@@ -12,6 +12,7 @@ export const getTodos = async (req,res) => {
     }
 }
 
+
 export const createTodo = async (req,res) => {
     try {
         const {assignedOn, description, expiresOn, pointsAwarded, timeSpent, title, username } = req.body
@@ -36,8 +37,22 @@ export const createTodo = async (req,res) => {
 
 export const updateTodo = async (req,res) => {
     try {
-        res.send("update")
-    } catch (error) {
+        const { id } = req.params
+        const data = req.body
+        
+        if (data.username) {
+            const updatedUserName = data.username
+            const newUser = await UserModel.findOne({username: updatedUserName})
+            console.log(newUser.username)
+            console.log(newUser._id)
+            const updatedUserId = newUser._id
+            const updatedTodo = await TodoModel.findByIdAndUpdate({_id: id}, {...data, completed: data.completed, user: updatedUserId}, {new: true})
+            res.send(updatedTodo)
+        } else {
+            const updatedTodo = await TodoModel.findByIdAndUpdate({_id: id}, {completed: !data.completed}, {new:true} )
+            res.send(updatedTodo)
+        }
+    }catch (error) {
         console.log('try failed', error)
     }
 }

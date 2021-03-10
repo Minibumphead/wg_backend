@@ -15,7 +15,7 @@ export const loginUser = async(req,res) => {
         console.log(authenticated)
             if (authenticated) {
                 console.log(`User with the id ${currentUser._id} successfully authenticated`)
-                res.send({id: currentUser._id, username: currentUser.username, email:currentUser.email, score: currentUser.score})
+                res.send({_id: currentUser._id, username: currentUser.username, email:currentUser.email, score: currentUser.score})
     }} catch (error) {
         res.status(400)
     }
