@@ -46,6 +46,10 @@ export const createUser = async(req, res) => {
 }
 
 export const updateUser = async(req, res) => {
+    const data = req.body
+    const id = req.params.id
+    const user = await UserModel.findByIdAndUpdate({_id: id}, {score: data.oldScore + data.points}, {new: true})
+    res.send(user)
 
 }
 

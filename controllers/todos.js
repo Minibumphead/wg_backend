@@ -43,8 +43,6 @@ export const updateTodo = async (req,res) => {
         if (data.username) {
             const updatedUserName = data.username
             const newUser = await UserModel.findOne({username: updatedUserName})
-            console.log(newUser.username)
-            console.log(newUser._id)
             const updatedUserId = newUser._id
             const updatedTodo = await TodoModel.findByIdAndUpdate({_id: id}, {...data, completed: data.completed, user: updatedUserId}, {new: true})
             res.send(updatedTodo)
