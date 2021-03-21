@@ -1,15 +1,16 @@
 import { Router } from "express";
-import {getTodos, createTodo, updateTodo, deleteTodo } from './../controllers/todos.js'
+import {
+  getTodos,
+  createTodo,
+  updateTodo,
+  deleteTodo,
+} from "./../controllers/todos.js";
 
+const todosRouter = Router();
 
-const todosRouter = Router()
+todosRouter.get("/", getTodos);
+todosRouter.post("/", createTodo);
+todosRouter.put("/:id", updateTodo);
+todosRouter.delete("/:id", deleteTodo);
 
-todosRouter.get('/', getTodos)
-todosRouter.post('/', createTodo)
-todosRouter.put('/:id', updateTodo)
-todosRouter.delete('/:id', deleteTodo)
-
-
-
-
-export default todosRouter
+export default todosRouter;
