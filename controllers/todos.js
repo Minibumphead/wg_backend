@@ -41,37 +41,11 @@ export const createTodo = async (req, res) => {
 
 export const updateTodo = async (req, res) => {
   try {
-    const { id } = req.params;
     const data = req.body;
-    const { newtime } = req.body;
-    console.log(req.body);
-    console.log(newtime);
-    if (newtime) {
-      console.log("if");
-      const updatedTodo = await TodoModel.findByIdAndUpdate(
-        { _id: id },
-        {
-          ...data,
-          completed: data.completed,
-          timeSpent: newtime,
-        },
-        { new: true }
-      );
-      const updatedTodos = await TodoModel.find();
-      res.send({ updatedTodos, updatedTodo });
-    } else {
-      console.log("else");
-      const updatedTodo = await TodoModel.findByIdAndUpdate(
-        { _id: id },
-        { completed: !data.completed, completedOn: new Date() },
-        { new: true }
-      );
-      const updatedTodos = await TodoModel.find();
-      res.send({ updatedTodos, updatedTodo });
-    }
-  } catch (error) {
-    console.log("try failed", error);
-  }
+    await TodoModel.findByIdAndUpdate(data._id, { ...data });
+    const updatedTodos = await TodoModel.find();
+    res.send(updatedTodos);
+  } catch (error) {}
 };
 
 export const deleteTodo = async (req, res) => {

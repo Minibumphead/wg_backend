@@ -11,9 +11,6 @@ var week = 0;
 export const addTodos = async () => {
   const startDate = new Date();
   const endDate = addDays(startDate, 6);
-  console.log(startDate);
-  console.log(endDate);
-  const month = startDate.getMonth();
   const andreas = await UserModel.findOne({ username: "Andreas" });
   const sven = await UserModel.findOne({ username: "Sven" });
   const julian = await UserModel.findOne({ username: "Julian" });

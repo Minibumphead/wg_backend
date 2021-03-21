@@ -24,7 +24,7 @@ mongoose
       console.log(`Server running on http://localhost:${PORT}`)
     )
   )
-  .catch(() => console.log("asdfaldfadsf"));
+  .catch(() => console.log("failed to connect to DB"));
 
 //Set up middleware
 app.use(cors());

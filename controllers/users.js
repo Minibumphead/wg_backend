@@ -15,9 +15,9 @@ const cleanUser = (user) => {
 export const getUsers = async (req, res) => {
   try {
     const allUsers = await UserModel.find();
-    const cleanedUsers = [];
-    allUsers.forEach((user) => cleanedUsers.push(cleanUser(user)));
-    res.send(cleanedUsers);
+    // const cleanedUsers = [];
+    // allUsers.forEach((user) => cleanedUsers.push(cleanUser(user)));
+    res.send(allUsers);
   } catch (error) {
     console.log(error);
   }
