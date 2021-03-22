@@ -45,7 +45,9 @@ export const updateTodo = async (req, res) => {
     await TodoModel.findByIdAndUpdate(data._id, { ...data });
     const updatedTodos = await TodoModel.find();
     res.send(updatedTodos);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const deleteTodo = async (req, res) => {
@@ -60,12 +62,16 @@ export const deleteTodo = async (req, res) => {
   }
 };
 
-const myJob = schedule.scheduleJob("* * * * * 1", function () {
-  try {
-    addTodos();
-    console.log("cron job ran successfully");
-  } catch (error) {
-    console.log("cron job failed");
-    console.log(error);
+const myJob = schedule.scheduleJob(
+  { hour: 10, minute: 0, dayOfWeek: 1 },
+  async function () {
+    try {
+      await addTodos();
+      console.log(new Date());
+      console.log("cron job ran successfully");
+    } catch (error) {
+      console.log("cron job failed");
+      console.log(error);
+    }
   }
-});
+);
